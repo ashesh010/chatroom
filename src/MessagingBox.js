@@ -4,24 +4,32 @@ import './App.css';
 
 class MessagingBox extends Component {
     messageHandler = (e) => {
-        if(e.keyCode === 13) {
+        if(e.target.type == 'textarea') {
+            if(e.keyCode === 13) {
+                e.preventDefault()
+                this.props.getMessage(e.target.value)
+                e.target.value = ""
+            }
+        } else{
             e.preventDefault()
-            this.props.getMessage(e.target.value)
-            e.target.value = ""
+            this.props.getMessage(e.target.message.value)
+            e.target.message.value = ""
         }
     }
-    
+
     render() {
         return (
-            <Grid
-                container
-                direction="row"
-                >
-                <Grid item xs>
-                    <TextField label="Message" variant="outlined" multiline onKeyDown={ this.messageHandler } style={{ width:'100%'}} />
+            <form onSubmit={ this.messageHandler }>
+                <Grid
+                    container
+                    direction="row"
+                    >
+                        <Grid item xs>
+                            <TextField label="Message" variant="outlined" multiline onKeyDown={ this.messageHandler } style={{ width:'100%'}} name="message"/>
+                        </Grid>
+                        &emsp;<Button variant="contained" color="primary" type="submit">Send</Button>
                 </Grid>
-                &emsp;<Button variant="contained" color="primary" type="submit">Send</Button>
-            </Grid>
+            </form>
         );
     }
 }

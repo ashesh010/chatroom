@@ -47,9 +47,9 @@ class MessagingPanel extends Component {
         })
     }
 
-    componentWillUnmount() {
-        socket.emit('user-leave', this.props.username );
-    }
+    // componentWillUnmount() {
+    //     socket.emit('user-leave', this.props.username );
+    // }
 
     getMessage = (message) => {
         const data = { username: this.props.username, message : message }

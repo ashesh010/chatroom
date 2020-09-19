@@ -19,25 +19,23 @@ class Login extends Component {
                 spacing={2}
             >
                 <Grid item>
-                    <div className="login">
-                        <h1>Chat Room</h1>
-                        <Card style={{ borderTop : '2px solid blue' }}>
-                            <form onSubmit={ this.login } style={{ margin:'25px' }}>
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="username"
-                                    label="Select a username"
-                                    name="username"
-                                    autoComplete="username"
-                                    autoFocus
-                                />
-                                <Button variant="contained" color="primary" type="submit">Login</Button>
-                            </form>
-                        </Card>
-                    </div>
+                    <h1>Chat Room</h1>
+                    <Card style={{ borderTop : '2px solid blue' }}>
+                        <form onSubmit={ this.login } style={{ margin:'25px' }}>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="username"
+                                label="Choose a username"
+                                name="username"
+                                autoComplete="username"
+                                autoFocus
+                            />
+                            <Button variant="contained" color="primary" type="submit">Login</Button>
+                        </form>
+                    </Card>
                 </Grid>
             </Grid>
         );
