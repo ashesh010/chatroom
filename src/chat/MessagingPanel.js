@@ -7,16 +7,18 @@ import DisplayConversation from './DisplayConversation';
 import MessagingBox from './MessagingBox';
 import io from 'socket.io-client'
 
-const socket = io.connect('http://localhost:4000')
+const socket = io.connect('/')
 
 class MessagingPanel extends Component {
     state = {
+        userid: null,
         messages: [],
         per: 6,
         page: 0,
         totalPages : null,
         scrolling : false,
-        loading : false
+        loading : false,
+        users: []
     }
     loadMessages = () => {
         const { per,page } = this.state;
@@ -34,9 +36,14 @@ class MessagingPanel extends Component {
     }
 
     componentDidMount () {
+        socket.emit('user-id');
         socket.emit('new-user', this.props.username );
         this.loadMessages();
         
+        socket.on('user-id', id => {
+            this.setState({ userid : id })
+        })
+
         socket.on('message', ({username,message}) => {
             const data = { username,message }
             this.setState({messages: [data,...this.state.messages]})
