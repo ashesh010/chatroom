@@ -4,7 +4,7 @@ import './App.css';
 
 class MessagingBox extends Component {
     messageHandler = (e) => {
-        if(e.target.type == 'textarea') {
+        if(e.target.type === 'textarea') {
             if(e.keyCode === 13) {
                 e.preventDefault()
                 this.props.getMessage(e.target.value)

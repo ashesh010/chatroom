@@ -27,6 +27,10 @@ class MessagingPanel extends Component {
         })
     }
     
+    componentCleanup() {
+        socket.emit('user-leave', this.props.username );
+    }
+
     componentDidMount () {
         socket.emit('new-user', this.props.username );
         this.loadMessages();
@@ -41,15 +45,21 @@ class MessagingPanel extends Component {
             this.setState({messages: [data,...this.state.messages]})
         })
 
-        socket.on('user-leave',() => {
-            const data = {  username: 'admin' }
+        socket.on('user-leave',(message) => {
+            const data = {  username: 'admin',message }
             this.setState({messages: [data,...this.state.messages]})
         })
-    }
 
-    // componentWillUnmount() {
-    //     socket.emit('user-leave', this.props.username );
-    // }
+        window.addEventListener('beforeunload', (e) => {
+            e.preventDefault();
+            this.componentCleanup()
+        });
+    }
+    
+    componentWillUnmount() {
+        this.componentCleanup();
+        window.removeEventListener('beforeunload', this.componentCleanup);
+    }
 
     getMessage = (message) => {
         const data = { username: this.props.username, message : message }
