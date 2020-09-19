@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import { Button,TextField,Grid, Card } from '@material-ui/core';
 
 class Login extends Component {

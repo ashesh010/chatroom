@@ -15,13 +15,15 @@ class MessagingPanel extends Component {
         per: 6,
         page: 0,
         totalPages : null,
-        scrolling : false
+        scrolling : false,
+        loading : false
     }
     loadMessages = () => {
         const { per,page } = this.state;
-
+        
         axios.get('/api/chatlist?per='+per+'&page='+page).then((response) => {
             this.setState({
+                loading : false,
                 messages : [...this.state.messages,...response.data]
             })
         })
@@ -73,6 +75,7 @@ class MessagingPanel extends Component {
         var scrollheight = document.getElementById('chat').scrollHeight;
         if (Math.abs(Math.round(top)) + height >= scrollheight) {
             this.setState(prevState => ({
+                loading: true,
                 page: prevState.page + this.state.per
             }), this.loadMessages)
         }
@@ -87,7 +90,7 @@ class MessagingPanel extends Component {
                 alignItems="center"
             >
                 <Grid item>
-                    <DisplayConversation messages = { this.state.messages } loadMore= { this.loadMore } /><p />
+                    <DisplayConversation messages = { this.state.messages } loadMore= { this.loadMore } loading = { this.state.loading }/><p />
                     <MessagingBox getMessage= { this.getMessage } />
                 </Grid>
             </Grid>

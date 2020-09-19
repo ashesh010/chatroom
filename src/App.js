@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import Login from './Login';
-import MessagingPanel from './MessagingPanel';
+import Login from './chat/Login';
+import MessagingPanel from './chat/MessagingPanel';
 
 class App extends Component {
     state = {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button,TextField,Grid } from '@material-ui/core';
-import './App.css';
 
 class MessagingBox extends Component {
     messageHandler = (e) => {
