@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Card, List,ListItem,ListItemAvatar, Avatar,ListItemText, Chip } from '@material-ui/core';
+import { Card, List,ListItem, Avatar,ListItemText, Chip } from '@material-ui/core';
 
 var cnt = 1;
 var itemStyle = {
@@ -16,17 +16,23 @@ class DisplayConversation extends Component {
      * Load list of chats fetched from database into the UI
      */
     displayMessage = () => this.props.messages.map(message => 
-        // (message.username !== undefined) ? (    
+        (message.userid !== this.props.userid) ? (    
             <List dense key={ cnt++ } style = { itemStyle }>
+                <small style={{ float:'left',marginLeft : '20px', marginBottom : '-5px' }}>{ message.username }</small>
                 <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                        <Avatar />
-                    </ListItemAvatar>
-                    <ListItemText primary={<Chip label={ message.message } />} secondary={ message.username }></ListItemText>
+                    <ListItemText primary={<Chip avatar={<Avatar>{ message.username.substring(0,1) }</Avatar>} label={ message.message } color="primary" variant="outlined"/>} ></ListItemText>
                 </ListItem>
                 
             </List>
-        // ) : ('')
+        ) : (
+            <List dense key={ cnt++ } style = { itemStyle }>
+                <small style={{ float: 'right', marginRight : '20px', marginBottom : '-5px' }}>{ message.username }</small>
+                <ListItem style = {{ transform:'rotate(180deg)'}}>
+                    <ListItemText primary={<Chip style={{ transform:'rotate(180deg)'}} avatar={<Avatar>{ message.username.substring(0,1) }</Avatar>} label={ message.message } color="secondary" variant="outlined"/>} ></ListItemText>
+                </ListItem>
+                
+            </List>
+        )
     )
     
     render() {

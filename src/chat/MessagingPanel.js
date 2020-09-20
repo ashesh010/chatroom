@@ -60,8 +60,8 @@ class MessagingPanel extends Component {
         })
 
         /* Listen for message */
-        socket.on('message', ({username,message}) => {
-            const data = { username,message }
+        socket.on('message', ({userid,username,message}) => {
+            const data = { userid,username,message }
             this.setState({messages: [data,...this.state.messages]})
         })
 
@@ -125,7 +125,7 @@ class MessagingPanel extends Component {
                 alignItems="center"
             >
                 <Grid item>
-                    <DisplayConversation messages = { this.state.messages } loadMore= { this.loadMore } loading = { this.state.loading }/><p />
+                    <DisplayConversation messages = { this.state.messages } loadMore= { this.loadMore } loading = { this.state.loading } userid = { this.state.userid }/><p />
                     <MessagingBox getMessage= { this.getMessage } />
                 </Grid>
             </Grid>
