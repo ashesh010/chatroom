@@ -6,10 +6,17 @@ var itemStyle = {
     transform:'rotate(180deg)',
     direction: 'ltr',
 }
+
+/**
+ * DisplayConversation Component to display chat history
+ * 
+ */
 class DisplayConversation extends Component {
-    
+    /**
+     * Load list of chats fetched from database into the UI
+     */
     displayMessage = () => this.props.messages.map(message => 
-        (message.username !== undefined) ? (    
+        // (message.username !== undefined) ? (    
             <List dense key={ cnt++ } style = { itemStyle }>
                 <ListItem alignItems="flex-start">
                     <ListItemAvatar>
@@ -19,7 +26,7 @@ class DisplayConversation extends Component {
                 </ListItem>
                 
             </List>
-        ) : ('')
+        // ) : ('')
     )
     
     render() {
@@ -31,9 +38,9 @@ class DisplayConversation extends Component {
             direction: 'rtl',
             overflowY : 'auto',
         }
-
-       
+ 
         return (
+            /* Returns a fragment with the chat history */
             <Fragment>
                 <h2>Welcome to Chat Room <small>{( this.props.loading) ? <Chip label="Loading..." color="primary" variant="outlined" size="small"/> : '' }</small></h2>
                 

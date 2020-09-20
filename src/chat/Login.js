@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Button,TextField,Grid, Card } from '@material-ui/core';
 
+/**
+ * Login Component
+ */
 class Login extends Component {
     
     login = (e) => {
@@ -9,6 +12,7 @@ class Login extends Component {
     }
 
     render() {
+        /* Returns a login form with a username textfield */
         return (
             <Grid
                 container

@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { Button,TextField,Grid } from '@material-ui/core';
-
+/**
+ * MessagingBox Component to allow users to enter a new message
+ */
 class MessagingBox extends Component {
+    /**
+     * Handle message input by the user
+     * @param {*} e 
+     */
     messageHandler = (e) => {
         if(e.target.type === 'textarea') {
             if(e.keyCode === 13) {
@@ -17,6 +23,7 @@ class MessagingBox extends Component {
     }
 
     render() {
+        /* Returns a grid with a message textfield and a submit button */
         return (
             <form onSubmit={ this.messageHandler }>
                 <Grid
