@@ -20,7 +20,7 @@ class DisplayConversation extends Component {
         (message.userid !== this.props.userid) ? (    
             <List dense key={ cnt++ } style = { itemStyle }>
                 <small style={{ float:'left',marginLeft : '20px', marginBottom : '-5px' }}>{ message.username }</small>
-                <ListItem alignItems="flex-start">
+                <ListItem>
                     <ListItemText primary={<Chip avatar={<Avatar>{ message.username.substring(0,1) }</Avatar>} label={ message.message } color="primary" variant="outlined"/>} ></ListItemText>
                 </ListItem>
                 
@@ -49,7 +49,6 @@ class DisplayConversation extends Component {
         return (
             /* Returns a fragment with the chat history */
             <Fragment>
-                <h2>Welcome to Chat Room <small>{( this.props.loading) ? <Chip label="Loading..." color="primary" variant="outlined" size="small"/> : '' }</small></h2>
                 
                 <Card style={cardStyle} id="chat" onScroll = { this.props.loadMore }>
                     { this.displayMessage() }

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Grid } from '@material-ui/core';
+import { Grid,Chip } from '@material-ui/core';
 //import './App.css';
 
 import DisplayConversation from './DisplayConversation';
 import MessagingBox from './MessagingBox';
 import io from 'socket.io-client'
+import OnlineUserList from './OnlineUserList';
 
 const socket = io.connect('http://localhost:4000')
 
@@ -19,6 +20,7 @@ class MessagingPanel extends Component {
         totalPages : null,
         scrolling : false,
         loading : false,
+        users: []
     }
 
     /**
@@ -43,7 +45,7 @@ class MessagingPanel extends Component {
      */
     componentCleanup() {
         /* User leaving chat room */
-        socket.emit('user-leave', this.props.username );
+        socket.emit('user-leave', {userid: this.state.userid, username:this.props.username} );
     }
 
     componentDidMount () {
@@ -57,6 +59,11 @@ class MessagingPanel extends Component {
         /* Listen for user id*/
         socket.on('user-id', id => {
             this.setState({ userid : id })
+        })
+
+        /* Listen for online users */
+        socket.on("users", users => {
+            this.setState({ users : users })
         })
 
         /* Listen for message */
@@ -74,9 +81,11 @@ class MessagingPanel extends Component {
         /* Listen for user leaving chat room */
         socket.on('user-leave',(message) => {
             const data = {  username: 'admin',message }
-            this.setState({messages: [data,...this.state.messages]})
+            this.setState({
+                messages: [data,...this.state.messages],
+            })
         })
-
+        
         /* Handle browser tab close event*/
         window.addEventListener('beforeunload', (e) => {
             e.preventDefault();
@@ -122,8 +131,14 @@ class MessagingPanel extends Component {
                 container
                 direction="row"
                 justify="center"
-                alignItems="center"
+                spacing = {2}
             >
+                <Grid item xs={12} style={{ textAlign: 'center'}}>
+                    <h2>Welcome to Chat Room <small>{( this.state.loading) ? <Chip label="Loading..." color="primary" variant="outlined" size="small"/> : '' }</small></h2>
+                </Grid>
+                <Grid item xs={2}>
+                    <OnlineUserList users={ this.state.users }/>
+                </Grid>
                 <Grid item>
                     <DisplayConversation messages = { this.state.messages } loadMore= { this.loadMore } loading = { this.state.loading } userid = { this.state.userid }/><p />
                     <MessagingBox getMessage= { this.getMessage } />
