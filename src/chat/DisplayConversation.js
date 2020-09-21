@@ -14,6 +14,7 @@ var itemStyle = {
 class DisplayConversation extends Component {
     /**
      * Load list of chats fetched from database into the UI
+     * LIst position based on user id
      */
     displayMessage = () => this.props.messages.map(message => 
         (message.userid !== this.props.userid) ? (    
