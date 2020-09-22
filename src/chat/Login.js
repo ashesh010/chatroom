@@ -1,15 +1,32 @@
 import React, { Component } from 'react';
 import { Button,TextField,Grid, Card } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import axios from'axios'
 
 /**
  * Login Component
  */
 class Login extends Component {
+    state = {
+        userExists : false
+    }
     
     login = (e) => {
         e.preventDefault();
-        this.props.setUsername(e.target.username.value)
+        var username = e.target.username.value
+        axios.post('/api/checkUserExists', { username }).then((response) => {
+            //check if user exists
+            if(response.data === false) {
+                this.props.setUsername(username)
+            } else {
+                this.setState({ userExists : true })
+            }
+        })
     }
+    
+    showMessage = ((message) =>
+        <Alert severity="error">{ message }</Alert>
+    )
 
     render() {
         /* Returns a login form with a username textfield */
@@ -24,6 +41,7 @@ class Login extends Component {
                 <Grid item>
                     <h1>Chat Room</h1>
                     <Card style={{ borderTop : '2px solid blue' }}>
+                        {(this.state.userExists) ? this.showMessage("User name already taken !!") : '' }
                         <form onSubmit={ this.login } style={{ margin:'25px' }}>
                             <TextField
                                 variant="outlined"
